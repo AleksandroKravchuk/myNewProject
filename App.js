@@ -1,10 +1,41 @@
+import * as Font from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
+import { Input } from "./Screens/RegistrationScreen";
+import React, { useState } from "react";
+import { AppLoading } from "expo";
 
+// const loadFonts = async () => {
+//   await Font.loadAsync({
+//     "Roboto-Regular": require("./assets/fonts/Roboto/Roboto-Regular.ttf"),
+//     "Roboto-Bold": require("./assets/fonts/Roboto/Roboto-Bold.ttf"),
+//   });
+// };
 export default function App() {
+  const [isReady, setIsReady] = useState(false);
+  // if (!isReady) {
+  //   return (
+  //     <AppLoading startAsync={loadFonts} onFinish={() => setIsReady(true)} />
+  //   );
+  // }
   return (
     <View style={styles.container}>
-      <Text>Hello world!</Text>
+      {/* <ImageBackground source={require("./assets/images/PhotoBG.jpg")}>
+        <Input />
+      </ImageBackground> */}
+      {/* <ImageBackground
+        source={require("./assets/images/PhotoBG.jpg")}
+        style={styles.image}
+      ></ImageBackground> */}
+      <ImageBackground
+        source={require("./assets/images/PhotoBG.jpg")}
+        // resizeMode="cover"
+        style={styles.image}
+      >
+        <Input />
+        {/* <Text>Hello world!</Text> */}
+      </ImageBackground>
+
       <StatusBar style="auto" />
     </View>
   );
@@ -13,8 +44,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    // backgroundColor: "#fff",
+    backgroundColor: "yellow",
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
     justifyContent: "center",
+    alignItems: "center",
   },
 });
