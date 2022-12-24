@@ -20,20 +20,11 @@ export default function App() {
   // }
   return (
     <View style={styles.container}>
-      {/* <ImageBackground source={require("./assets/images/PhotoBG.jpg")}>
-        <Input />
-      </ImageBackground> */}
-      {/* <ImageBackground
-        source={require("./assets/images/PhotoBG.jpg")}
-        style={styles.image}
-      ></ImageBackground> */}
       <ImageBackground
         source={require("./assets/images/PhotoBG.jpg")}
-        // resizeMode="cover"
         style={styles.image}
       >
         <Input />
-        {/* <Text>Hello world!</Text> */}
       </ImageBackground>
 
       <StatusBar style="auto" />
@@ -44,13 +35,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#fff",
     backgroundColor: "yellow",
   },
   image: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-end",
   },
 });

@@ -1,40 +1,63 @@
 import React, { useState } from "react";
 import { StyleSheet, View, TextInput,  KeyboardAvoidingView, 
   Platform, TouchableWithoutFeedback, 
-  Keyboard, Alert, Button} from "react-native";
+  Keyboard, Alert, Text,TouchableOpacity} from "react-native";
 
 export const Input=()=> {
-const [value, setValue] = useState("");
-const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
   const nameHandler = (text) => setName(text);
   const passwordHandler = (text) => setPassword(text);
   const onLogin = () => {
-    Alert.alert("Credentials", `${name} + ${password}`);
+    Alert.alert("Credentials", `${login} + ${password}+${email}`);
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+      <View style={styles.form}>
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
-          <TextInput
-            value={name}
-            onChangeText={nameHandler}
-            placeholder="Username"
-            style={styles.input}
+          <View style={styles.titleBox}>
+            <Text style={styles.title}>Registration</Text>
+          </View>
+          
+          <View>
+                <TextInput
+              value={login}
+              onChangeText={nameHandler}
+              placeholder="Login"
+              style={{ ...styles.input, marginBottom: 16 }}
+              
           />
-          <TextInput
+          </View>
+            <View>
+                <TextInput
+              value={email}
+              onChangeText={nameHandler}
+              placeholder="Email address"
+              style={{ ...styles.input, marginBottom: 16 }}
+              
+          />
+          </View>
+          <View>
+              <TextInput
             value={password}
             onChangeText={passwordHandler}
             placeholder="Password"
             secureTextEntry={true}
             style={styles.input}
-            cursorColor="red"
-          />
-          <Button title={"Login"} style={styles.button} onPress={onLogin} />
+          />   
+      </View>
+            <TouchableOpacity style={styles.btn}>
+              <Text style={styles.btnTitle}>Register</Text>
+          </TouchableOpacity>
+          <View style={styles.linkLoginBox}>
+            <Text style={styles.linkLogin}>Already have an account? Log in</Text>
+          </View>
+
         </KeyboardAvoidingView>
       </View>
     </TouchableWithoutFeedback>
@@ -42,35 +65,68 @@ const [name, setName] = useState("");
 }
 
 const styles = StyleSheet.create({
-  container: {
+  form: {
     flex: 1,
-   maxHeight:200,
-    // alignItems: "center",
-    justifyContent: "center",
-    // backgroundColor: "#ecf0f1",
+    maxHeight: 550,
+    // marginTop:"auto",
+    borderTopRightRadius: 25,
+    borderTopLeftRadius:25,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 16,
+    justifyContent:"flex-end",
+  },
+  titleBox: {
+    alignItems: "center",
+    marginTop: 92,
+    marginBottom: 33,
+  },
+    title: {
+    // Font:Roboto,
+// wight:500,
+    fontSize: 30,
+    color: "#212121",
+    lineHeight: 35,
+    letterSpacing: 1,
   },
   input: {
-    width: 200,
-    height: 44,
-    padding: 10,
+    backgroundColor: "#F6F6F6",
+    padding:16,
+    borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#ecf0f1",
-    marginBottom: 10,
-    borderRadius: 10,
-    color: "#ecf0f1",
-    // cursorColor: "#ecf0f1",
-    // placeholderTextColor:"#ecf0f1",
+    borderColor: "#E8E8E8",
+    color: "#BDBDBD",
+    fontStyle: "normal",
+    fontSize: 16,
+    lineHeight:19,
   },
-
-  // button: {
-  //   width: 200,
-  //   height: 44,
-  //   padding: 10,
-  //   borderWidth: 1,
-  //   borderColor: "black",
-  //   borderRadius:10,
-  //   marginBottom: 10,
-  //   backgroundColor: "blue",
-  //   color: "white",
-  // },
+  btnBox: {
+    alignItems: "center",
+    marginTop:43,
+  },
+  btn: {
+    alignItems: "center",
+    marginTop:43,
+    backgroundColor: "#FF6C00",
+   borderRadius:100,
+  },
+  btnTitle: {
+    fontSize: 16,
+    fontWeight:"400",
+    lineHeight: 19,
+    color: "#FFFFFF",
+    paddingBottom: 16,
+    paddingTop:16,
+  },
+  linkLoginBox: {
+     marginTop: 16,
+    marginBottom: 66,
+    alignItems:"center",
+  },
+  linkLogin: {
+    fontSize: 16,
+    fontWeight: "400",
+    lineHeight: 18.75,
+    color: "#1B4371",
+   
+  },
 });
