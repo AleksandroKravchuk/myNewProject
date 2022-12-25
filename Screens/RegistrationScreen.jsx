@@ -3,20 +3,27 @@ import { StyleSheet, View, TextInput,  KeyboardAvoidingView,
   Platform, TouchableWithoutFeedback, 
   Keyboard, Alert, Text,TouchableOpacity} from "react-native";
 
-export const Input=()=> {
-const [email, setEmail] = useState("");
-const [login, setLogin] = useState("");
+export const Input = () => {
+  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
   const nameHandler = (text) => setName(text);
+  const emailHandler = (text) => setEmail(text);
   const passwordHandler = (text) => setPassword(text);
-  const onLogin = () => {
-    Alert.alert("Credentials", `${login} + ${password}+${email}`);
-  };
+  // const onLogin = () => {
+  //   Alert.alert("Credentials", `${login} + ${password}+${email}`);
+  // };
 
+  const keyboardSet = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+  }
+// { ...styles.form, marginBottom:isShowKeyboard&&150}
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.form}>
+    <TouchableWithoutFeedback onPress={keyboardSet}>
+      <View style={{...styles.form,marginBottom:Platform.OS=="ios"&&isShowKeyboard?135:0}}>
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
@@ -29,29 +36,33 @@ const [login, setLogin] = useState("");
               value={login}
               onChangeText={nameHandler}
               placeholder="Login"
+              placeholderTextColor="#BDBDBD"
               style={{ ...styles.input, marginBottom: 16 }}
-              
+              onFocus={()=>setIsShowKeyboard(true)}
           />
           </View>
             <View>
                 <TextInput
               value={email}
-              onChangeText={nameHandler}
+              onChangeText={emailHandler}
               placeholder="Email address"
+              placeholderTextColor="#BDBDBD"
               style={{ ...styles.input, marginBottom: 16 }}
-              
+              onFocus={()=>setIsShowKeyboard(true)}
           />
           </View>
           <View>
               <TextInput
             value={password}
             onChangeText={passwordHandler}
-            placeholder="Password"
+              placeholder="Password"
+              placeholderTextColor="#BDBDBD"
             secureTextEntry={true}
-            style={styles.input}
+              style={styles.input}
+              onFocus={()=>setIsShowKeyboard(true)}
           />   
       </View>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={keyboardSet}>
               <Text style={styles.btnTitle}>Register</Text>
           </TouchableOpacity>
           <View style={styles.linkLoginBox}>
@@ -73,7 +84,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius:25,
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 16,
-    justifyContent:"flex-end",
+    // justifyContent:"flex-end",
   },
   titleBox: {
     alignItems: "center",
@@ -94,7 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: "#E8E8E8",
-    color: "#BDBDBD",
+    color: "#212121",
     fontStyle: "normal",
     fontSize: 16,
     lineHeight:19,
