@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { StyleSheet, View, TextInput,  KeyboardAvoidingView, 
   Platform, TouchableWithoutFeedback, 
-  Keyboard, Alert, Text,TouchableOpacity} from "react-native";
+  Keyboard, Alert, Text, TouchableOpacity
+} from "react-native";
 
+ const initialState =  {
+    login: "",
+    email: "",
+    password:"",
+ }
 export const Input = () => {
-  const [email, setEmail] = useState("");
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
-  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
-  const nameHandler = (text) => setName(text);
-  const emailHandler = (text) => setEmail(text);
-  const passwordHandler = (text) => setPassword(text);
+  const [state, setState] = useState(initialState);
+  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  
+  
+ 
   // const onLogin = () => {
   //   Alert.alert("Credentials", `${login} + ${password}+${email}`);
   // };
@@ -19,8 +23,10 @@ export const Input = () => {
   const keyboardSet = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
+    console.log(state)
+    setState(initialState)
   }
-// { ...styles.form, marginBottom:isShowKeyboard&&150}
+ 
   return (
     <TouchableWithoutFeedback onPress={keyboardSet}>
       <View style={{...styles.form,marginBottom:Platform.OS=="ios"&&isShowKeyboard?135:0}}>
@@ -33,8 +39,8 @@ export const Input = () => {
           
           <View>
                 <TextInput
-              value={login}
-              onChangeText={nameHandler}
+              onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
+              value={state.login}
               placeholder="Login"
               placeholderTextColor="#BDBDBD"
               style={{ ...styles.input, marginBottom: 16 }}
@@ -43,8 +49,8 @@ export const Input = () => {
           </View>
             <View>
                 <TextInput
-              value={email}
-              onChangeText={emailHandler}
+              onChangeText={(value) => setState((prevState) => ({ ...prevState, email: value }))}
+              value={state.email}
               placeholder="Email address"
               placeholderTextColor="#BDBDBD"
               style={{ ...styles.input, marginBottom: 16 }}
@@ -53,14 +59,14 @@ export const Input = () => {
           </View>
           <View>
               <TextInput
-            value={password}
-            onChangeText={passwordHandler}
+              onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
+              value={state.password}
               placeholder="Password"
               placeholderTextColor="#BDBDBD"
             secureTextEntry={true}
               style={styles.input}
               onFocus={()=>setIsShowKeyboard(true)}
-          />   
+            />   
       </View>
             <TouchableOpacity style={styles.btn} onPress={keyboardSet}>
               <Text style={styles.btnTitle}>Register</Text>
@@ -92,8 +98,7 @@ const styles = StyleSheet.create({
     marginBottom: 33,
   },
     title: {
-    // Font:Roboto,
-// wight:500,
+    fontFamily:"Roboto-Regular",
     fontSize: 30,
     color: "#212121",
     lineHeight: 35,
