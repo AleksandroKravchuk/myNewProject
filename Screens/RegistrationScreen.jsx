@@ -3,6 +3,7 @@ import { StyleSheet, View, TextInput,  KeyboardAvoidingView,
   Platform, TouchableWithoutFeedback, 
   Keyboard, Alert, Text, TouchableOpacity
 } from "react-native";
+import { Icon } from '@rneui/themed';
 
  const initialState =  {
     login: "",
@@ -10,7 +11,7 @@ import { StyleSheet, View, TextInput,  KeyboardAvoidingView,
     password:"",
  }
 export const Input = () => {
-
+const [onShow, setOnShow] = useState(true);
   const [state, setState] = useState(initialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   
@@ -23,12 +24,12 @@ export const Input = () => {
   const keyboardSet = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log(state)
     setState(initialState)
   }
  
   return (
-    <TouchableWithoutFeedback onPress={keyboardSet}>
+    <>
+          <TouchableWithoutFeedback onPress={keyboardSet}>
       <View style={{...styles.form,marginBottom:Platform.OS=="ios"&&isShowKeyboard?135:0}}>
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -36,7 +37,6 @@ export const Input = () => {
           <View style={styles.titleBox}>
             <Text style={styles.title}>Registration</Text>
           </View>
-          
           <View>
                 <TextInput
               onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
@@ -67,6 +67,9 @@ export const Input = () => {
               style={styles.input}
               onFocus={()=>setIsShowKeyboard(true)}
             />   
+            
+             
+                        
       </View>
             <TouchableOpacity style={styles.btn} onPress={keyboardSet}>
               <Text style={styles.btnTitle}>Register</Text>
@@ -78,6 +81,18 @@ export const Input = () => {
         </KeyboardAvoidingView>
       </View>
     </TouchableWithoutFeedback>
+    <View style={styles.eye} >
+        {onShow ? <Icon onPress={() => setOnShow(!onShow)}
+                name='eye'
+                color="#BDBDBD"
+              type='font-awesome'
+            /> : <Icon
+                  name='eye-slash'
+                   color="#BDBDBD"
+              type='font-awesome'/>}
+            </View>
+    </>
+
   );
 }
 
@@ -98,7 +113,9 @@ const styles = StyleSheet.create({
     marginBottom: 33,
   },
     title: {
-    fontFamily:"Roboto-Regular",
+      fontFamily: "Roboto-Regular",
+      fontStyle: "normal",
+      fontWeight:"500",
     fontSize: 30,
     color: "#212121",
     lineHeight: 35,
@@ -110,6 +127,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: "#E8E8E8",
+    fontFamily: "Roboto-Regular",
+    fontStyle: "normal",
+    fontWeight:"400",
     color: "#212121",
     fontStyle: "normal",
     fontSize: 16,
@@ -126,6 +146,9 @@ const styles = StyleSheet.create({
    borderRadius:100,
   },
   btnTitle: {
+    fontFamily: "Roboto-Regular",
+    fontStyle: "normal",
+    fontWeight:"400",
     fontSize: 16,
     fontWeight:"400",
     lineHeight: 19,
@@ -139,10 +162,23 @@ const styles = StyleSheet.create({
     alignItems:"center",
   },
   linkLogin: {
+    fontFamily: "Roboto-Regular",
+    fontStyle: "normal",
+    fontWeight:"400",
     fontSize: 16,
     fontWeight: "400",
     lineHeight: 18.75,
     color: "#1B4371",
-   
   },
+  eye: {
+    // marginTop: -54,
+    // marginLeft:"auto",
+    width: 50,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    right: 20,
+    bottom:200,
+  }
 });

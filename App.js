@@ -1,28 +1,29 @@
-import * as Font from "expo-font";
+import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, ImageBackground } from "react-native";
 import { Input } from "./Screens/RegistrationScreen";
-import React, { useState } from "react";
-import { AppLoading } from "expo";
+import React, { useCallback } from "react";
+import * as SplashScreen from "expo-splash-screen";
 
-const loadFonts = async () => {
-  await Font.AppLoading({
-    "Roboto-Regular": require("./assets/fonts/Roboto-MediumItalic.ttf"),
-    "Ubuntu-Regular": require("./assets/fonts/Ubuntu-Regular.ttf"),
-    "Ubuntu-Bold": require("./assets/fonts/Ubuntu-Bold.ttf"),
-  });
-};
+// const loadFonts = async () => {
+//   await Font.AppLoading({
+//     "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
+//   });
+// };
 export default function App() {
-  const [isReady, setIsReady] = useState(false);
-  if (!isReady) {
-    return (
-      <AppLoading
-        startAsync={loadFonts}
-        onFinish={() => setIsReady(true)}
-        onError={console.warn}
-      />
-    );
+  const [fontsLoaded] = useFonts({
+    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
+  });
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
   }
+
   return (
     <View style={styles.container}>
       <ImageBackground
