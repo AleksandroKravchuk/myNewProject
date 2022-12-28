@@ -26,7 +26,10 @@ const [onShow, setOnShow] = useState(true);
     Keyboard.dismiss();
     setState(initialState)
   }
- 
+  const eyeClick = () => {
+    console.log("css")
+    setOnShow(!onShow)
+ }
   return (
     <>
           <TouchableWithoutFeedback onPress={keyboardSet}>
@@ -57,7 +60,7 @@ const [onShow, setOnShow] = useState(true);
               onFocus={()=>setIsShowKeyboard(true)}
           />
           </View>
-          <View>
+            <View style={styles.password} >
               <TextInput
               onChangeText={(value) => setState((prevState) => ({ ...prevState, password: value }))}
               value={state.password}
@@ -82,7 +85,7 @@ const [onShow, setOnShow] = useState(true);
       </View>
     </TouchableWithoutFeedback>
     <View style={styles.eye} >
-        {onShow ? <Icon onPress={() => setOnShow(!onShow)}
+        {onShow ? <Icon onPress={eyeClick}
                 name='eye'
                 color="#BDBDBD"
               type='font-awesome'
@@ -179,6 +182,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     position: "absolute",
     right: 20,
-    bottom:200,
-  }
+    // top:Platform.OS=="ios" ?560:456,
+  },
+  password: {
+   position:"relative" ,
+  },
 });
