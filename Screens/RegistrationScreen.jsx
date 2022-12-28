@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, TextInput,  KeyboardAvoidingView, 
   Platform, TouchableWithoutFeedback, 
-  Keyboard, Alert, Text, TouchableOpacity
+  Keyboard, Alert, Text, TouchableOpacity,Dimensions
 } from "react-native";
 import { Icon } from '@rneui/themed';
 
@@ -11,15 +11,21 @@ import { Icon } from '@rneui/themed';
     password:"",
  }
 export const Input = () => {
-const [onShow, setOnShow] = useState(true);
+const [onShow, setOnShow] = useState(false);
   const [state, setState] = useState(initialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const [dimensions, setDimensions] = useState(Dimensions.get("window").width-16*2);
   
-  
- 
-  // const onLogin = () => {
-  //   Alert.alert("Credentials", `${login} + ${password}+${email}`);
-  // };
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width-16*2;
+      setDimensions(width)
+    }
+    Dimensions.addEventListener("change", onChange);
+    // return () => {
+    //  Dimensions.removeEventListener("change", onChange);
+    // }
+},[])
 
   const keyboardSet = () => {
     setIsShowKeyboard(false);
@@ -27,14 +33,14 @@ const [onShow, setOnShow] = useState(true);
     setState(initialState)
   }
   const eyeClick = () => {
-    console.log("css")
     setOnShow(!onShow)
  }
   return (
     <>
           <TouchableWithoutFeedback onPress={keyboardSet}>
-      <View style={{...styles.form,marginBottom:Platform.OS=="ios"&&isShowKeyboard?135:0}}>
-        <KeyboardAvoidingView
+        <View style={{ ...styles.form, marginBottom: Platform.OS == "ios" && isShowKeyboard ? 135 : 0 }}>
+          <View style={{width: dimensions}} >
+ <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
           <View style={styles.titleBox}>
@@ -70,7 +76,16 @@ const [onShow, setOnShow] = useState(true);
               style={styles.input}
               onFocus={()=>setIsShowKeyboard(true)}
             />   
-            
+            <View style={styles.eye} >
+        {onShow ? <Icon  onPress={eyeClick}
+                name='eye'
+                  color="#BDBDBD"
+              type='font-awesome'
+            /> : <Icon onPress={eyeClick}
+                  name='eye-slash'
+                    color="#BDBDBD"
+              type='font-awesome'/>}
+            </View>
              
                         
       </View>
@@ -82,18 +97,12 @@ const [onShow, setOnShow] = useState(true);
           </View>
 
         </KeyboardAvoidingView>
+
+          </View>
+       
       </View>
     </TouchableWithoutFeedback>
-    <View style={styles.eye} >
-        {onShow ? <Icon onPress={eyeClick}
-                name='eye'
-                color="#BDBDBD"
-              type='font-awesome'
-            /> : <Icon
-                  name='eye-slash'
-                   color="#BDBDBD"
-              type='font-awesome'/>}
-            </View>
+    
     </>
 
   );
@@ -103,12 +112,11 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
     maxHeight: 550,
-    // marginTop:"auto",
     borderTopRightRadius: 25,
     borderTopLeftRadius:25,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    // justifyContent:"flex-end",
+    alignItems:"center",
+    // paddingHorizontal: 16,
   },
   titleBox: {
     alignItems: "center",
@@ -174,15 +182,13 @@ const styles = StyleSheet.create({
     color: "#1B4371",
   },
   eye: {
-    // marginTop: -54,
-    // marginLeft:"auto",
     width: 50,
     height: 50,
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    right: 20,
-    // top:Platform.OS=="ios" ?560:456,
+    right: 0,
+    top:Platform.OS=="ios" ?0:5,
   },
   password: {
    position:"relative" ,
