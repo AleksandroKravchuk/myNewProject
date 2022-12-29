@@ -1,7 +1,8 @@
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, ImageBackground } from "react-native";
-import { Input } from "./Screens/RegistrationScreen";
+import { StyleSheet, View, Text, ImageBackground } from "react-native";
+import { RegistrationScreen } from "./Screens/RegistrationScreen";
+import { LoginScreen } from "./Screens/LoginScreen.jsx";
 import React, { useCallback } from "react";
 import * as SplashScreen from "expo-splash-screen";
 
@@ -30,7 +31,8 @@ export default function App() {
         source={require("./assets/images/PhotoBG.jpg")}
         style={styles.image}
       >
-        <Input />
+        <RegistrationScreen />
+        {/* <LoginScreen/> */}
       </ImageBackground>
 
       <StatusBar style="auto" />

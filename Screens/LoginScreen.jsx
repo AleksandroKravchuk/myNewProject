@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, TextInput,  KeyboardAvoidingView, 
   Platform, TouchableWithoutFeedback, 
-  Keyboard,  Text, TouchableOpacity,Dimensions,Image,
+  Keyboard,  Text, TouchableOpacity,Dimensions
 } from "react-native";
 import { Icon } from '@rneui/themed';
 
  const initialState =  {
-    login: "",
     email: "",
     password:"",
  }
-export const RegistrationScreen = () => {
+export const LoginScreen = () => {
 const [onShow, setOnShow] = useState(false);
   const [state, setState] = useState(initialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
@@ -20,7 +19,6 @@ const [onShow, setOnShow] = useState(false);
     const onChange = () => {
       const width = Dimensions.get("window").width-16*2;
       setDimensions(width)
-      
     }
     Dimensions.addEventListener("change", onChange);
     // return () => {
@@ -31,8 +29,8 @@ const [onShow, setOnShow] = useState(false);
   const keyboardSet = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    setState(initialState)
-    console.log(state)
+      setState(initialState)
+      console.log(state)
   }
   const eyeClick = () => {
     setOnShow(!onShow)
@@ -44,27 +42,9 @@ const [onShow, setOnShow] = useState(false);
           <View style={{width: dimensions}} >
  <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
-            >
-              <View style={styles.imgAvatar}>
-                <View style={styles.addImgIcon}>
-                  <Image
-        style={styles.plus}
-        source={require('../assets/images/Union.png')}
-                  />
-                </View>
-              </View>
+        >
           <View style={styles.titleBox}>
-                <Text style={styles.title}>Registration</Text>
-          </View>
-          <View>
-                <TextInput
-              onChangeText={(value) => setState((prevState) => ({ ...prevState, login: value }))}
-              value={state.login}
-              placeholder="Login"
-              placeholderTextColor="#BDBDBD"
-              style={{ ...styles.input, marginBottom: 16 }}
-              onFocus={()=>setIsShowKeyboard(true)}
-          />
+            <Text style={styles.title}>Login</Text>
           </View>
             <View>
                 <TextInput
@@ -119,35 +99,6 @@ const [onShow, setOnShow] = useState(false);
 }
 
 const styles = StyleSheet.create({
-  imgAvatar: {
-    width: 120,
-    height: 120,
-     backgroundColor: "#F6F6F6",
-    borderRadius: 16,
-    position: "absolute",
-    top: -60,
-    left: "50%",
-    transform: [{ translateX: - Dimensions.get('window').width * 0.18 }],
-  },
-  addImgIcon: {
-    width: 25,
-    height: 25,
-    borderRadius: 50,
-    borderWidth:1,
-    borderColor: "#FF6C00",
-    position: "absolute",
-    top: "65%",
-    right: "-9%",
-    flex:1,
-    justifyContent: "center",
-    alignItems: "center",
-    
-  },
-  // plus: {
-  //   width: 13,
-  //   height: 13, 
-  //   color: "#FF6C00",
-  // },
   form: {
     flex: 1,
     maxHeight: 550,
