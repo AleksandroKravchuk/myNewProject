@@ -32,7 +32,7 @@ export default function App() {
         style={styles.image}
       >
         <RegistrationScreen />
-        {/* <LoginScreen/> */}
+        {/* <LoginScreen /> */}
       </ImageBackground>
 
       <StatusBar style="auto" />
